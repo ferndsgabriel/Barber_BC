@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id                String          @id  @default(uuid())
+  name              String    
+  email             String          @unique
+  sub               String          @unique
+  photo             String
+  status            Boolean         @default(false)
+  reservation       Reservation[]
+  token             Token[]
+}
+
+model Adm {
+  id                String           @id  @default(uuid())
+  name              String
+  email             String           @unique
+  pass              String
+  token             Token[]
+}
+
+model Reservation {
+  id                String           @id  @default(uuid())
+  date              Int
+  HourStart         Int 
+  HourFinish        Int 
+  user              User             @relation(fields: [user_id], references: [id])
+  user_id           String
+  hairStyle         HairStyle        @relation(fields: [hairStyle_id], references: [id])
+  hairStyle_id      String
+  additional        Additional?        @relation(fields: [additional_id], references: [id])
+  additional_id     String?
+}
+
+model HairStyle {
+  id                String            @id     @default(uuid())
+  description       String
+  timer             Int
+  price             Float
+  image             String
+  name              String
+  reservation       Reservation[]
+}
+
+model Additional {
+  id                String            @id      @default(uuid())
+  description       String
+  timer             Int
+  price             Float
+  image             String
+  name              String
+  reservation       Reservation[]
+}
+
+
+model Token {
+  id                String            @id 
+  user              User?             @relation(fields: [user_id], references: [id])
+  user_id           String?
+  adm               Adm?              @relation(fields: [adm_id], references: [id])
+  adm_id            String?
+}
+
