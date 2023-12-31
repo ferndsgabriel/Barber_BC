@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Additional" ALTER COLUMN "timer" SET DATA TYPE DOUBLE PRECISION;

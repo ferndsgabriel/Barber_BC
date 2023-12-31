@@ -7,13 +7,15 @@ interface CreateUserProps {
     lastname:string;
     email: string;
     pass:string,
-    cod: string
+    cod: string,
+    main:boolean,
+    status:boolean
 }
 
 class CreateAdmServices {
-    async execute({ name, email, pass, cod, lastname}: CreateUserProps) {
+    async execute({ name, email, pass, cod, lastname, main, status}: CreateUserProps) {
 
-        if (!email || !name  || !pass || !cod || !lastname) {
+        if (!email || !name  || !pass || !lastname || main === undefined || main === null) {
         throw new Error('Digite todos os campos.');
         }
 
@@ -32,7 +34,7 @@ class CreateAdmServices {
 
         const codAdm = await compare (cod, process.env.ADMCREATE_SECRET);
 
-        if (!codAdm){
+        if (!codAdm && main){
             throw new Error ('Código inválido');
         }
         
@@ -49,16 +51,21 @@ class CreateAdmServices {
         const formatName = FormatName(name);
         const formatLastname = FormatName(lastname);
 
+        const newStatus = main === true ? main : undefined
 
         const createUser = await prisma.adm.create({
             data:{
-                name: `${formatName} ${formatLastname}`,
+                name:`${formatName} ${formatLastname}`,
                 pass:hashPass,
-                email:lowerEmail
+                email:lowerEmail,
+                main:main,
+                status:newStatus
             },select:{
                 name:true,
                 email:true,
-                id:true
+                id:true,
+                main:true,
+                status:true,
             }
         })
 

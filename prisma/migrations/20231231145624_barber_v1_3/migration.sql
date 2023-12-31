@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Adm" ADD COLUMN     "main" BOOLEAN NOT NULL DEFAULT true;

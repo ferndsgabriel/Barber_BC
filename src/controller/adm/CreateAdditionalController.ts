@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { CreateHairStyleServices } from "../../services/adm/CreateHairStyleServices";
+import { CreateAdditionalServices } from "../../services/adm/CreateAdditionalServices";
 
-class CreateHairStyleController {
+class CreateAdditionalController {
     async handle(req: Request, res: Response) {
         const { description, price, timer, name } = req.body;
 
@@ -13,8 +13,8 @@ class CreateHairStyleController {
         const isFullNumberPrice = parseFloat(price);
         const isFullNumberTimer = parseInt(timer);
 
-        const createHairStyleServices = new CreateHairStyleServices();
-        const createHairStyle = await createHairStyleServices.execute({
+        const createAdditionalServices = new CreateAdditionalServices();
+        const CreateAdditional = await createAdditionalServices.execute({
             description,
             price:isFullNumberPrice,
             timer:isFullNumberTimer,
@@ -22,9 +22,9 @@ class CreateHairStyleController {
             image: firebaseUrl
         });
 
-        return res.status(201).json(createHairStyle) ;
+        return res.status(201).json(CreateAdditional) ;
         
     }
 }
 
-export { CreateHairStyleController };
+export { CreateAdditionalController };

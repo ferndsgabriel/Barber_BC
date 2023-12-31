@@ -13,8 +13,8 @@ model User {
   name              String    
   email             String          @unique
   sub               String          @unique
-  photo             String
-  status            Boolean         @default(false)
+  photo             String?
+  status            Boolean?         
   reservation       Reservation[]
   token             Token[]
 }
@@ -24,6 +24,9 @@ model Adm {
   name              String
   email             String           @unique
   pass              String
+  status            Boolean?  
+  main              Boolean       
+  photo             String?
   token             Token[]
 }
 

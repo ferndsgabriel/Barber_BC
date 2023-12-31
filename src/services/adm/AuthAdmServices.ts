@@ -28,6 +28,13 @@ class AuthAdmServices{
             throw new Error ('Dados inválidos.');
         }
 
+        if (userExist.status === null){
+            throw new Error ('Usuário não válidado.');
+        }
+        if (userExist.status === false){
+            throw new Error ('Usuário em análise.');
+        }
+
         const token = sign({
             name:userExist.name,
             email:userExist.email

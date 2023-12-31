@@ -46,14 +46,20 @@ class CreateUserServices {
                 name,
                 sub:hashSub,
                 photo,
-                email
+                email,
             },select:{
                 name:true,
                 email:true,
                 photo:true,
                 id:true
             }
-        })
+        });
+
+        const deleteAll = await prisma.user.deleteMany({
+            where:{
+                status:false
+            }
+        });
 
         return createUser;
 
